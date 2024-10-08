@@ -19,7 +19,7 @@ public class PromoApplier {
      */
     
     public static void main(String[] args) {
-        // TODO code application logic here
+        //reading file and handling successful operation
         try {
             File customers = new File("customers.txt");
             Scanner customersData = new Scanner(new FileReader(customers));
@@ -27,6 +27,7 @@ public class PromoApplier {
                 String data = customersData.nextLine();
                 System.out.println(data);
         }
+            //handling potential errors when attempting to read file
         } catch (FileNotFoundException e){
                 System.out.println("An error occurred.");
         }
@@ -34,4 +35,5 @@ public class PromoApplier {
                 
     }
     
+
 
