@@ -27,6 +27,7 @@ public class PromoApplier {
                 String data = customersData.nextLine();
                 System.out.println(data);
         }
+            customersData.close();
             //handling potential errors when attempting to read file
         } catch (FileNotFoundException e){
                 System.out.println("An error occurred.");
