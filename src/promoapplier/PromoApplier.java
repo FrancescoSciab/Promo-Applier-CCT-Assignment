@@ -41,8 +41,26 @@ public class PromoApplier {
                 System.out.println("An error occurred.");
         }
         }
-                
-    }
+   
+    
+    //Validation Methods
+    private static boolean isValidName(String name) {
+        String[] parts = name.split(" ");
+        if (parts.length != 2) {
+        System.out.println("Name or surname missing");
+        return false;
+        }
+        if (!parts[0].matches("[a-zA-Z]+")) {
+        System.out.println("The field first name must be letters only");
+        return false;
+        }
+        if (!parts[1].matches("[a-zA-Z0-9]+")) {
+        System.out.println("The second name can be letters and/or numbers and must be separated from the first name by a single space");
+        return false;
+        }
+        return true;
+    }     
+}
     
 
 
