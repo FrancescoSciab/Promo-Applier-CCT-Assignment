@@ -29,11 +29,21 @@ public class PromoApplier {
                 String totalPurchaseStr = customersData.nextLine();
                 String classStr = customersData.nextLine();
                 String lastPurchaseStr = customersData.nextLine();
+                
+                //Validating each field
+                if (isValidName(name)) {
+                String[] nameParts = name.split(" ");
+                String firstName = nameParts[0];
+                String secondName = nameParts[1];
+                
+                System.out.println(firstName + " " + secondName);
+                
+                }
 
-                System.out.println(name);
-                System.out.println(totalPurchaseStr);
-                System.out.println(classStr);
-                System.out.println(lastPurchaseStr);
+                
+//                System.out.println(totalPurchaseStr);
+//                System.out.println(classStr);
+//                System.out.println(lastPurchaseStr);
         }
             customersData.close();
             //handling potential errors when attempting to read file
