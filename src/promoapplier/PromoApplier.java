@@ -24,8 +24,16 @@ public class PromoApplier {
             File customers = new File("customers.txt");
             Scanner customersData = new Scanner(new FileReader(customers));
             while (customersData.hasNextLine()) {
-                String data = customersData.nextLine();
-                System.out.println(data);
+                //Read the customer data (4 lines per customer)
+                String name = customersData.nextLine();
+                String totalPurchaseStr = customersData.nextLine();
+                String classStr = customersData.nextLine();
+                String lastPurchaseStr = customersData.nextLine();
+
+                System.out.println(name);
+                System.out.println(totalPurchaseStr);
+                System.out.println(classStr);
+                System.out.println(lastPurchaseStr);
         }
             customersData.close();
             //handling potential errors when attempting to read file
