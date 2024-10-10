@@ -40,17 +40,18 @@ public class PromoApplier {
                 double totalPurchase = Double.parseDouble(totalPurchaseStr);
                 int classValue = Integer.parseInt(classStr);
                 
+                //Calculate final value base on class and most recent purchase
+                double discount = calculateDiscount(totalPurchase, classValue, lastPurchaseStr);
+                double finalPrice = totalPurchase - discount;
+                
+                //testing before writing to another file
                 System.out.println(firstName + " " + secondName);
                 System.out.println("spent a total of: " + totalPurchase);
-                System.out.println("with class: " + classValue);
                 System.out.println("in " + lastPurchaseStr);
+                System.out.println("with class: " + classValue);
+                System.out.println("Your final PRICE WILL BE: " + finalPrice + "\n");
                 
                 }
-
-                
-//                System.out.println(totalPurchaseStr);
-//                System.out.println(classStr);
-//                System.out.println(lastPurchaseStr);
         }
             customersData.close();
             //handling potential errors when attempting to read file
@@ -116,6 +117,45 @@ public class PromoApplier {
             System.out.println("Last purchase year must be a number.");
             return false;
         }
+    }
+    
+    //Discount Calculation Method
+    private static double calculateDiscount(double totalPurchase, int classValue, String lastPurchaseStr) {
+        int currentYear = 2024;
+        int lastYearPurchase = Integer.parseInt(lastPurchaseStr);
+        int MostRecentPurchase = currentYear - lastYearPurchase;
+        double discount = 0.0;
+        
+        switch (classValue) {
+            case 1: 
+                if(MostRecentPurchase == 0) {
+                    discount = totalPurchase * 0.30;    
+                }
+                if(MostRecentPurchase <= 5) {
+                    discount = totalPurchase * 0.20;
+                }
+                if(MostRecentPurchase >= 5) {
+                    discount = totalPurchase * 0.10;
+                }
+                break;
+            case 2: 
+                if(MostRecentPurchase == 0) {
+                    discount = totalPurchase * 0.15;    
+                }
+                if(MostRecentPurchase <= 5) {
+                    discount = totalPurchase * 0.13;
+                }
+                if(MostRecentPurchase >= 5) {
+                    discount = totalPurchase * 0.05;
+                }
+                break;
+            case 3:
+                if(MostRecentPurchase == 0) {
+                    discount = totalPurchase * 0.03;    
+                }
+                break;
+        }
+        return discount;
     }
 }
     
