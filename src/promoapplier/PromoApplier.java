@@ -31,14 +31,16 @@ public class PromoApplier {
                 String lastPurchaseStr = customersData.nextLine();
                 
                 //Validating each field
-                if (isValidName(name) && isValidTotalPurchase(totalPurchaseStr)) {
+                if (isValidName(name) && isValidTotalPurchase(totalPurchaseStr) && isValidClass(classStr)) {
                 String[] nameParts = name.split(" ");
                 String firstName = nameParts[0];
                 String secondName = nameParts[1];
                 double totalPurchase = Double.parseDouble(totalPurchaseStr);
+                int classValue = Integer.parseInt(classStr);
                 
                 System.out.println(firstName + " " + secondName);
                 System.out.println("Total purchase: " + totalPurchase);
+                System.out.println("With Class: " + classValue);
                 
                 }
 
@@ -81,6 +83,21 @@ public class PromoApplier {
         System.out.println("The field value of total purchase must be a decimal number");
         return false;
     }
+    }
+    
+    private static boolean isValidClass(String classStr) {
+        try {
+            int classInt = Integer.parseInt(classStr);
+            if (classInt < 1 || classInt > 3) {
+                System.out.println("The field Class must be a integer between 1 to 3.");
+                return false;
+            }
+            return true;
+            
+        } catch (NumberFormatException e) {
+            System.out.println("The field class must be a valid integer.");
+            return false;
+        }
     }
 }
     
