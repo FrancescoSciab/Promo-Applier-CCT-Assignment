@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+
 public class PromoApplier {
 
     /**
@@ -31,7 +33,7 @@ public class PromoApplier {
                 String lastPurchaseStr = customersData.nextLine();
                 
                 //Validating each field
-                if (isValidName(name) && isValidTotalPurchase(totalPurchaseStr) && isValidClass(classStr)) {
+                if (isValidName(name) && isValidTotalPurchase(totalPurchaseStr) && isValidClass(classStr) && isValidYear(lastPurchaseStr)) {
                 String[] nameParts = name.split(" ");
                 String firstName = nameParts[0];
                 String secondName = nameParts[1];
@@ -39,8 +41,9 @@ public class PromoApplier {
                 int classValue = Integer.parseInt(classStr);
                 
                 System.out.println(firstName + " " + secondName);
-                System.out.println("Total purchase: " + totalPurchase);
-                System.out.println("With Class: " + classValue);
+                System.out.println("spent a total of: " + totalPurchase);
+                System.out.println("with class: " + classValue);
+                System.out.println("in " + lastPurchaseStr);
                 
                 }
 
@@ -96,6 +99,21 @@ public class PromoApplier {
             
         } catch (NumberFormatException e) {
             System.out.println("The field class must be a valid integer.");
+            return false;
+        }
+    }
+    
+    private static boolean isValidYear(String lastPurchaseStr) {
+        try {
+            int yearInt = Integer.parseInt(lastPurchaseStr);
+            if (yearInt > 1900 && yearInt <= 2024) {
+                return true;
+            } else {
+                System.out.println("Year must be a valid year.");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Last purchase year must be a number.");
             return false;
         }
     }
