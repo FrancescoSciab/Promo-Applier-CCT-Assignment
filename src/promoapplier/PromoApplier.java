@@ -31,12 +31,14 @@ public class PromoApplier {
                 String lastPurchaseStr = customersData.nextLine();
                 
                 //Validating each field
-                if (isValidName(name)) {
+                if (isValidName(name) && isValidTotalPurchase(totalPurchaseStr)) {
                 String[] nameParts = name.split(" ");
                 String firstName = nameParts[0];
                 String secondName = nameParts[1];
+                double totalPurchase = Double.parseDouble(totalPurchaseStr);
                 
                 System.out.println(firstName + " " + secondName);
+                System.out.println("Total purchase: " + totalPurchase);
                 
                 }
 
@@ -69,7 +71,17 @@ public class PromoApplier {
         return false;
         }
         return true;
-    }     
+    }   
+    
+    private static boolean isValidTotalPurchase(String totalPurchaseStr) {
+    try {
+        Double.parseDouble(totalPurchaseStr);
+        return true;
+    } catch (NumberFormatException e) {
+        System.out.println("The field value of total purchase must be a decimal number");
+        return false;
+    }
+    }
 }
     
 
