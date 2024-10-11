@@ -10,7 +10,9 @@ package promoapplier;
  */
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -25,6 +27,8 @@ public class PromoApplier {
         try {
             File customers = new File("customers.txt");
             Scanner customersData = new Scanner(new FileReader(customers));
+            FileWriter writer = new FileWriter("customerdiscount.txt");
+            
             while (customersData.hasNextLine()) {
                 //Read the customer data (4 lines per customer)
                 String name = customersData.nextLine();
@@ -44,21 +48,31 @@ public class PromoApplier {
                 double discount = calculateDiscount(totalPurchase, classValue, lastPurchaseStr);
                 double finalPrice = totalPurchase - discount;
                 
-                //testing before writing to another file
-                System.out.println(firstName + " " + secondName);
-                System.out.println("spent a total of: " + totalPurchase);
-                System.out.println("in " + lastPurchaseStr);
-                System.out.println("with class: " + classValue);
-                System.out.println("Your final PRICE WILL BE: " + finalPrice + "\n");
+                //Write valid result to customerdiscount.txt
+                writer.write(firstName + " " + secondName + "\n");
+                writer.write("Final Value: " + finalPrice + "\n");
                 
+                
+                //testing before writing to another file
+//                System.out.println(firstName + " " + secondName);
+//                System.out.println("spent a total of: " + totalPurchase);
+//                System.out.println("in " + lastPurchaseStr);
+//                System.out.println("with class: " + classValue);
+//                System.out.println("Your final PRICE WILL BE: " + finalPrice + "\n");
+                
+                } else {
+                    System.out.println("Invalid data for customer: " + name);
                 }
         }
             customersData.close();
+            writer.close();
             //handling potential errors when attempting to read file
         } catch (FileNotFoundException e){
                 System.out.println("An error occurred.");
+        } catch (IOException e) {
+            System.out.println("An error occurred: IO error.");
         }
-        }
+    }
    
     
     //Validation Methods
