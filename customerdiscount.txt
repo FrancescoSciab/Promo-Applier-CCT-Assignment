@@ -10,5 +10,6 @@ Katie White
 Final Value: 78.0
 Peter Nolan
 Final Value: 163.56
+Invalid data for customer: Daragh Nolan
 Patrick Moss
 Final Value: 79.2

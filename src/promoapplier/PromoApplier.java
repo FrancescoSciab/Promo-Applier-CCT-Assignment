@@ -18,9 +18,7 @@ import java.util.Scanner;
 
 public class PromoApplier {
 
-    /**
-     * @param args the command line arguments
-     */
+    //Link to GitHub repository: https://github.com/FrancescoSciab/Promo-Applier-CCT-Assignment/tree/main
     
     public static void main(String[] args) {
         //reading file and handling successful operation
@@ -62,6 +60,7 @@ public class PromoApplier {
                 
                 } else {
                     System.out.println("Invalid data for customer: " + name);
+                    writer.write("Invalid data for customer: " + name + "\n");
                 }
         }
             customersData.close();
