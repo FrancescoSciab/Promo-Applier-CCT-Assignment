@@ -35,6 +35,12 @@ public class PromoApplier {
                 String classStr = customersData.nextLine();
                 String lastPurchaseStr = customersData.nextLine();
                 
+                // Check for incomplete data/blank field
+                if (name.isEmpty() || totalPurchaseStr.isEmpty() || classStr.isEmpty() || lastPurchaseStr.isEmpty()) {
+                    writer.write("Missing data for customer: " + name + "\n");
+                    continue; // Skip to the next customer if data is incomplete
+                }
+                
                 //getting year through library
                 int currentYear = LocalDate.now().getYear();
                 
