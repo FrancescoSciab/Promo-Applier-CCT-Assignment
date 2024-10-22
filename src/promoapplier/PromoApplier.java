@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+import java.time.LocalDate;
 
 
 public class PromoApplier {
@@ -28,27 +29,30 @@ public class PromoApplier {
             FileWriter writer = new FileWriter("customerdiscount.txt");
             
             while (customersData.hasNextLine()) {
-                //Read the customer data (4 lines per customer)
+                //Read the customer data from file(4 lines per customer)
                 String name = customersData.nextLine();
                 String totalPurchaseStr = customersData.nextLine();
                 String classStr = customersData.nextLine();
                 String lastPurchaseStr = customersData.nextLine();
                 
+                //getting year through library
+                int currentYear = LocalDate.now().getYear();
+                
                 //Validating each field
-                if (isValidName(name) && isValidTotalPurchase(totalPurchaseStr) && isValidClass(classStr) && isValidYear(lastPurchaseStr)) {
+                if (isValidName(name) && isValidTotalPurchase(totalPurchaseStr) && isValidClass(classStr) && isValidYear(lastPurchaseStr, currentYear)) {
                 String[] nameParts = name.split(" ");
                 String firstName = nameParts[0];
                 String secondName = nameParts[1];
                 double totalPurchase = Double.parseDouble(totalPurchaseStr);
                 int classValue = Integer.parseInt(classStr);
                 
-                //Calculate final value base on class and most recent purchase
-                double discount = calculateDiscount(totalPurchase, classValue, lastPurchaseStr);
+                //Calculate final price base on class and most recent purchase
+                double discount = calculateDiscount(totalPurchase, classValue, lastPurchaseStr, currentYear);
                 double finalPrice = totalPurchase - discount;
                 
                 //Write valid result to customerdiscount.txt
                 writer.write(firstName + " " + secondName + "\n");
-                writer.write("Final Value: " + finalPrice + "\n");
+                writer.write("Final Price: " + finalPrice + "\n");
                 
                 
                 //testing before writing to another file
@@ -117,10 +121,11 @@ public class PromoApplier {
         }
     }
     
-    private static boolean isValidYear(String lastPurchaseStr) {
+    private static boolean isValidYear(String lastPurchaseStr, int currentYear) {
+        
         try {
             int yearInt = Integer.parseInt(lastPurchaseStr);
-            if (yearInt > 1900 && yearInt <= 2024) {
+            if (yearInt > 1900 && yearInt <= currentYear) {
                 return true;
             } else {
                 System.out.println("Year must be a valid year.");
@@ -133,8 +138,8 @@ public class PromoApplier {
     }
     
     //Discount Calculation Method
-    private static double calculateDiscount(double totalPurchase, int classValue, String lastPurchaseStr) {
-        int currentYear = 2024;
+    private static double calculateDiscount(double totalPurchase, int classValue, String lastPurchaseStr, int currentYear) {
+        
         int lastYearPurchase = Integer.parseInt(lastPurchaseStr);
         int MostRecentPurchase = currentYear - lastYearPurchase;
         double discount = 0.0;
@@ -147,7 +152,7 @@ public class PromoApplier {
                 if(MostRecentPurchase <= 5) {
                     discount = totalPurchase * 0.20;
                 }
-                if(MostRecentPurchase >= 5) {
+                if(MostRecentPurchase > 5) {
                     discount = totalPurchase * 0.10;
                 }
                 break;
@@ -158,7 +163,7 @@ public class PromoApplier {
                 if(MostRecentPurchase <= 5) {
                     discount = totalPurchase * 0.13;
                 }
-                if(MostRecentPurchase >= 5) {
+                if(MostRecentPurchase > 5) {
                     discount = totalPurchase * 0.05;
                 }
                 break;

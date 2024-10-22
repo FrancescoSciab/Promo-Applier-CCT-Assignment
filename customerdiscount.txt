@@ -1,15 +1,15 @@
 Sam Weiss
-Final Value: 455.01
+Final Price: 455.01
 Cristiani Eccher
-Final Value: 1477.31
+Final Price: 1477.31
 Declan Walsh
-Final Value: 216.8
+Final Price: 216.8
 Barry Smart
-Final Value: 2780.0
+Final Price: 2780.0
 Katie White
-Final Value: 78.0
+Final Price: 78.0
 Peter Nolan
-Final Value: 163.56
+Final Price: 163.56
 Invalid data for customer: Daragh Nolan
 Patrick Moss
-Final Value: 79.2
+Final Price: 79.2
