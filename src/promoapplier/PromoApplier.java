@@ -98,7 +98,11 @@ public class PromoApplier {
     
     private static boolean isValidTotalPurchase(String totalPurchaseStr) {
     try {
-        Double.parseDouble(totalPurchaseStr);
+        double totalPurchase = Double.parseDouble(totalPurchaseStr);
+        if (totalPurchase <= 0) {
+            System.out.println("No purchases.");
+            return false;
+        }
         return true;
     } catch (NumberFormatException e) {
         System.out.println("The field value of total purchase must be a decimal number");
@@ -140,41 +144,28 @@ public class PromoApplier {
     
     //Discount Calculation Method
     private static double calculateDiscount(double totalPurchase, int classValue, String lastPurchaseStr, int currentYear) {
+        if (totalPurchase == 0) {
+            return 0; // No need to apply discounts if the total purchase is zero
+        }
         
         int lastYearPurchase = Integer.parseInt(lastPurchaseStr);
-        int MostRecentPurchase = currentYear - lastYearPurchase;
-        double appliedDiscount = 0.0;
+        int yearsSinceLastPurchase = currentYear - lastYearPurchase;
+        double discountPercentage = 0.0;
         
         switch (classValue) {
             case 1: 
-                if(MostRecentPurchase == 0) {
-                    appliedDiscount = totalPurchase * 0.30;    
-                }
-                if(MostRecentPurchase <= 5) {
-                    appliedDiscount = totalPurchase * 0.20;
-                }
-                if(MostRecentPurchase > 5) {
-                    appliedDiscount = totalPurchase * 0.10;
-                }
+                discountPercentage = (yearsSinceLastPurchase == 0) ? 0.30 :
+                                     (yearsSinceLastPurchase <= 5) ? 0.20 : 0.10;
                 break;
             case 2: 
-                if(MostRecentPurchase == 0) {
-                    appliedDiscount = totalPurchase * 0.15;    
-                }
-                if(MostRecentPurchase <= 5) {
-                    appliedDiscount = totalPurchase * 0.13;
-                }
-                if(MostRecentPurchase > 5) {
-                    appliedDiscount = totalPurchase * 0.05;
-                }
+                discountPercentage = (yearsSinceLastPurchase == 0) ? 0.15 :
+                                     (yearsSinceLastPurchase <= 5) ? 0.13 : 0.05;
                 break;
             case 3:
-                if(MostRecentPurchase == 0) {
-                    appliedDiscount = totalPurchase * 0.03;    
-                }
+                discountPercentage = (yearsSinceLastPurchase == 0) ? 0.03 : 0.00;
                 break;
         }
-        return appliedDiscount;
+        return totalPurchase * discountPercentage;
     }
 }
     
