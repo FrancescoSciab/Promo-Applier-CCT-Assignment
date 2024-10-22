@@ -40,40 +40,40 @@ public class PromoApplier {
                 
                 //Validating each field
                 if (isValidName(name) && isValidTotalPurchase(totalPurchaseStr) && isValidClass(classStr) && isValidYear(lastPurchaseStr, currentYear)) {
-                String[] nameParts = name.split(" ");
-                String firstName = nameParts[0];
-                String secondName = nameParts[1];
-                double totalPurchase = Double.parseDouble(totalPurchaseStr);
-                int classValue = Integer.parseInt(classStr);
-                
-                //Calculate final price base on class and most recent purchase
-                double discount = calculateDiscount(totalPurchase, classValue, lastPurchaseStr, currentYear);
-                double finalPrice = totalPurchase - discount;
-                
-                //Write valid result to customerdiscount.txt
-                writer.write(firstName + " " + secondName + "\n");
-                writer.write("Final Price: " + finalPrice + "\n");
-                
-                
-                //testing before writing to another file
-//                System.out.println(firstName + " " + secondName);
-//                System.out.println("spent a total of: " + totalPurchase);
-//                System.out.println("in " + lastPurchaseStr);
-//                System.out.println("with class: " + classValue);
-//                System.out.println("Your final PRICE WILL BE: " + finalPrice + "\n");
+                    String[] nameParts = name.split(" ");
+                    String firstName = nameParts[0];
+                    String secondName = nameParts[1];
+                    double totalPurchase = Double.parseDouble(totalPurchaseStr);
+                    int classValue = Integer.parseInt(classStr);
+                    
+                    //Calculate final price base on class and most recent purchase
+                    double discountedPrice = calculateDiscount(totalPurchase, classValue, lastPurchaseStr, currentYear);
+                    double finalPrice = totalPurchase - discountedPrice;
+                    
+                    //Write valid result to customerdiscount.txt
+                    writer.write(firstName + " " + secondName + "\n");
+                    writer.write("Final Price: " + finalPrice + "\n");
+                    
+                    
+                    //testing before writing to another file
+//                    System.out.println(firstName + " " + secondName);
+//                    System.out.println("spent a total of: " + totalPurchase);
+//                    System.out.println("in " + lastPurchaseStr);
+//                    System.out.println("with class: " + classValue);
+//                    System.out.println("Your final PRICE WILL BE: " + finalPrice + "\n");
                 
                 } else {
-                    System.out.println("Invalid data for customer: " + name);
                     writer.write("Invalid data for customer: " + name + "\n");
                 }
-        }
+            }
             customersData.close();
             writer.close();
             //handling potential errors when attempting to read file
         } catch (FileNotFoundException e){
-                System.out.println("An error occurred.");
+                System.out.println("An error occurred while reading from file");
+            //handling potential errors when attempting to write on file
         } catch (IOException e) {
-            System.out.println("An error occurred: IO error.");
+            System.out.println("An error occurred while writing on a new file: IO error.");
         }
     }
    
@@ -106,6 +106,7 @@ public class PromoApplier {
     }
     }
     
+    //Only classes available are: 1, 2 or 3.
     private static boolean isValidClass(String classStr) {
         try {
             int classInt = Integer.parseInt(classStr);
@@ -120,7 +121,7 @@ public class PromoApplier {
             return false;
         }
     }
-    
+    //using general rules when validating year(from 1900 to current year) as no further instructions are present
     private static boolean isValidYear(String lastPurchaseStr, int currentYear) {
         
         try {
@@ -142,38 +143,38 @@ public class PromoApplier {
         
         int lastYearPurchase = Integer.parseInt(lastPurchaseStr);
         int MostRecentPurchase = currentYear - lastYearPurchase;
-        double discount = 0.0;
+        double appliedDiscount = 0.0;
         
         switch (classValue) {
             case 1: 
                 if(MostRecentPurchase == 0) {
-                    discount = totalPurchase * 0.30;    
+                    appliedDiscount = totalPurchase * 0.30;    
                 }
                 if(MostRecentPurchase <= 5) {
-                    discount = totalPurchase * 0.20;
+                    appliedDiscount = totalPurchase * 0.20;
                 }
                 if(MostRecentPurchase > 5) {
-                    discount = totalPurchase * 0.10;
+                    appliedDiscount = totalPurchase * 0.10;
                 }
                 break;
             case 2: 
                 if(MostRecentPurchase == 0) {
-                    discount = totalPurchase * 0.15;    
+                    appliedDiscount = totalPurchase * 0.15;    
                 }
                 if(MostRecentPurchase <= 5) {
-                    discount = totalPurchase * 0.13;
+                    appliedDiscount = totalPurchase * 0.13;
                 }
                 if(MostRecentPurchase > 5) {
-                    discount = totalPurchase * 0.05;
+                    appliedDiscount = totalPurchase * 0.05;
                 }
                 break;
             case 3:
                 if(MostRecentPurchase == 0) {
-                    discount = totalPurchase * 0.03;    
+                    appliedDiscount = totalPurchase * 0.03;    
                 }
                 break;
         }
-        return discount;
+        return appliedDiscount;
     }
 }
     
