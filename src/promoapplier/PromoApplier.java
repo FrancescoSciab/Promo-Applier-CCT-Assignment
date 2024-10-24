@@ -35,16 +35,16 @@ public class PromoApplier {
                 String classStr = customersData.nextLine();
                 String lastPurchaseStr = customersData.nextLine();
                 
-                // Check for incomplete data/blank field
+                // Check for incomplete data/blank field. Skipping to next cst if data missing
                 if (name.isEmpty() || totalPurchaseStr.isEmpty() || classStr.isEmpty() || lastPurchaseStr.isEmpty()) {
                     writer.write("Missing data for customer: " + name + "\n");
-                    continue; // Skip to the next customer if data is incomplete
+                    continue;
                 }
                 
-                //getting year through library
+                //getting current year using library
                 int currentYear = LocalDate.now().getYear();
                 
-                //Validating each field
+                //Validating each field running below methods
                 if (isValidName(name) && isValidTotalPurchase(totalPurchaseStr) && isValidClass(classStr) && isValidYear(lastPurchaseStr, currentYear)) {
                     String[] nameParts = name.split(" ");
                     String firstName = nameParts[0];
@@ -52,22 +52,13 @@ public class PromoApplier {
                     double totalPurchase = Double.parseDouble(totalPurchaseStr);
                     int classValue = Integer.parseInt(classStr);
                     
-                    //Calculate final price base on class and most recent purchase
+                    //Calculating final price based on class and last purchase using below method
                     double discountedPrice = calculateDiscount(totalPurchase, classValue, lastPurchaseStr, currentYear);
                     double finalPrice = totalPurchase - discountedPrice;
                     
                     //Write valid result to customerdiscount.txt
                     writer.write(firstName + " " + secondName + "\n");
                     writer.write("Final Price: " + finalPrice + "\n");
-                    
-                    
-                    //testing before writing to another file
-//                    System.out.println(firstName + " " + secondName);
-//                    System.out.println("spent a total of: " + totalPurchase);
-//                    System.out.println("in " + lastPurchaseStr);
-//                    System.out.println("with class: " + classValue);
-//                    System.out.println("Your final PRICE WILL BE: " + finalPrice + "\n");
-                
                 } else {
                     writer.write("Invalid data for customer: " + name + "\n");
                 }
@@ -85,6 +76,7 @@ public class PromoApplier {
    
     
     //Validation Methods
+    //first name must be letters only and second name can be letters and/or numbers and must be separated from the first name by a single space
     private static boolean isValidName(String name) {
         String[] parts = name.split(" ");
         if (parts.length != 2) {
@@ -131,7 +123,7 @@ public class PromoApplier {
             return false;
         }
     }
-    //using general rules when validating year(from 1900 to current year) as no further instructions are present
+    //using general rules when validating year(from 1900 to current year).
     private static boolean isValidYear(String lastPurchaseStr, int currentYear) {
         
         try {
@@ -150,14 +142,16 @@ public class PromoApplier {
     
     //Discount Calculation Method
     private static double calculateDiscount(double totalPurchase, int classValue, String lastPurchaseStr, int currentYear) {
+        // No discount applied if the total purchase is zero
         if (totalPurchase == 0) {
-            return 0; // No need to apply discounts if the total purchase is zero
+            return 0; 
         }
         
         int lastYearPurchase = Integer.parseInt(lastPurchaseStr);
         int yearsSinceLastPurchase = currentYear - lastYearPurchase;
         double discountPercentage = 0.0;
         
+        //discount applier logic
         switch (classValue) {
             case 1: 
                 discountPercentage = (yearsSinceLastPurchase == 0) ? 0.30 :
