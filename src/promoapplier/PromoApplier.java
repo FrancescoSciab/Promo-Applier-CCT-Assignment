@@ -19,7 +19,7 @@ import java.time.LocalDate;
 
 public class PromoApplier {
 
-    //Link to GitHub repository: https://github.com/FrancescoSciab/Promo-Applier-CCT-Assignment/tree/main
+    //Link to GitHub repository: https://github.com/FrancescoSciab/Promo-Applier-CCT-Assignment/tree/master
     
     public static void main(String[] args) {
         //reading file and handling successful operation
